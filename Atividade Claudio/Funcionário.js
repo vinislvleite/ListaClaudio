@@ -44,7 +44,7 @@ function Pagamento(SalarioMinEstadual,codigo,HorasTrab,turno,categoria){
 const salarioInicial = HorasTrab + valorHoraTrab
 
 let auxiloAlimentação;
-if (salarioInicial <= 800,00){
+if (salarioInicial <= 800.00){
     auxiloAlimentação = salarioInicial * 0.25
 }else if (salarioInicial <= 1200){
     auxiloAlimentação = salarioInicial * 0.20
