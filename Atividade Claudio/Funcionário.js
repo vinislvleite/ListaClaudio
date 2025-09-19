@@ -1,7 +1,53 @@
+const readline = require('readline');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
+const taxaGerenteMV = 0.04;
+const taxaFuncionarioN = 0.02;
+const taxaFuncionarioMV = 0.01;
+
+function calcularFolhaDePagamento(salarioMinimoEstadual, codigo, horasTrabalhadas, turno, categoria) {
+  
+  let valorHoraTrabalhada;
+
+  if (categoria == 'G' && (turno == 'M' || turno == 'V')) {
+    valorHoraTrabalhada = salarioMinimoEstadual * taxaGerenteMV;
+  } else if (categoria === 'F' && turno === 'N') {
+    valorHoraTrabalhada = salarioMinimoEstadual * taxaFuncionarioN;
+  } else if (categoria === 'F' && (turno === 'M' || turno === 'V')) {
+    valorHoraTrabalhada = salarioMinimoEstadual * taxaFuncionarioMV;
+  } else {
+    console.log('Dados de categoria ou turno inválidos.');
+    rl.close();
+    return;
+  }
+
+  const salarioInicial = horasTrabalhadas * valorHoraTrabalhada;
+
+  let auxilioAlimentacao;
+  if (salarioInicial <= 800.00) {
+    auxilioAlimentacao = salarioInicial * 0.25;
+  } else if (salarioInicial <= 1200) {
+    auxilioAlimentacao = salarioInicial * 0.20;
+  } else {
+    auxilioAlimentacao = salarioInicial * 0.15;
+  }
+
+  const salarioFinal = salarioInicial + auxilioAlimentacao;
+
+  console.log('\n--- Pagamento ---');
+  console.log(`Salário Mínimo Estadual: R$ ${salarioMinimoEstadual.toFixed(2)}`);
+  console.log(`Código do Funcionário: ${codigo}`);
+  console.log(`Horas Trabalhadas: ${horasTrabalhadas}`);
+  console.log(`Valor da Hora Trabalhada: R$ ${valorHoraTrabalhada.toFixed(2)}`);
+  console.log(`Salário Inicial: R$ ${salarioInicial.toFixed(2)}`);
+  console.log(`Auxílio Alimentação: R$ ${auxilioAlimentacao.toFixed(2)}`);
+  console.log(`Salário Final: R$ ${salarioFinal.toFixed(2)}`);
+  console.log('-----------------------------------');
+  rl.close();
+}
 
 rl.question('Digite o valor do salário mínimo estadual: ', (salarioMinimoStr) => {
   const salarioMinimoEstadual = parseFloat(salarioMinimoStr);
@@ -23,43 +69,3 @@ rl.question('Digite o valor do salário mínimo estadual: ', (salarioMinimoStr) 
     });
   });
 });
-
-const taxaGerenteMV = 0.04
-const taxaFuncionárioN = 0.02
-const taxaFuncionárioMV = 0.01
-
-function Pagamento(SalarioMinEstadual,codigo,HorasTrab,turno,categoria){
-    if (categoria == 'G' && (turno == 'M' || turno == 'V')){
-        valorHoraTrab = SalarioMinEstadual * taxaGerenteMV
-    }else if (categoria === 'F' && turno === 'N') {
-    valorHoraTrabalhada = salarioMinimoEstadual * taxaFuncionarioN;
-  } else if (categoria === 'F' && (turno === 'M' || turno === 'V')) {
-    valorHoraTrabalhada = salarioMinimoEstadual * taxaFuncionarioMV;
-  } else {
-    console.log('Dados de categoria ou turno inválidos.');
-    rl.close();
-    return;
-    }
-
-const salarioInicial = HorasTrab + valorHoraTrab
-
-let auxiloAlimentação;
-if (salarioInicial <= 800.00){
-    auxiloAlimentação = salarioInicial * 0.25
-}else if (salarioInicial <= 1200){
-    auxiloAlimentação = salarioInicial * 0.20
-}else{
-    auxiloAlimentação = salarioInicial * 0.15
-}
-
- console.log('\n--- Pagamento ---');
-  console.log(`Salário Mínimo Estadual: R$ ${salarioMinimoEstadual.toFixed(2)}`);
-  console.log(`Código do Funcionário: ${codigo}`);
-  console.log(`Horas Trabalhadas: ${horasTrabalhadas}`);
-  console.log(`Valor da Hora Trabalhada: R$ ${valorHoraTrabalhada.toFixed(2)}`);
-  console.log(`Salário Inicial: R$ ${salarioInicial.toFixed(2)}`);
-  console.log(`Auxílio Alimentação: R$ ${auxilioAlimentacao.toFixed(2)}`);
-  console.log(`Salário Final: R$ ${salarioFinal.toFixed(2)}`);
-  console.log('-----------------------------------');
-  rl.close();
-}
