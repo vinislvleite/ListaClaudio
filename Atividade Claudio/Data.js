@@ -12,7 +12,7 @@ rl.question('Data: ', (data) => {
 });
 
 function ConverterData(data) {
-    const dataQuebrada = data.split('/');
+    const dataQuebrada = data.split('/')
 
     if(dataQuebrada.length !== 3){
         return "Formato de data errado. Use dd/mm/aaaa"
@@ -21,6 +21,14 @@ function ConverterData(data) {
     const dia = dataQuebrada[0]
     const mes = parseInt(dataQuebrada[1])
     const ano = dataQuebrada[2]
+
+    if (dia < 1 || dia > 31) {
+        return "A Dia deve ser entre 1 e 31";
+    }
+    
+    if (mes < 1 || mes > 12) {
+        return "O Mês deve ser entre 1 e 12.";
+    }
 
     let nomeMes;
     
